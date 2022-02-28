@@ -24,12 +24,12 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/resources/css/retype.css?v=1.11.2.699213820749" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.11.2.699397810858" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.699213820749" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.699397810858" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.11.2" defer data-turbo-track="reload"></script>
-    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.699213820749" defer></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.699213820749" defer></script>
+    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.699397810858" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.699397810858" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -214,7 +214,7 @@ You can also use other Build Systems but it is recommended to use CMake for the 
 <template #title>CPM</template>
 <div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <div class="codeblock-title">CMakeLists.txt</div>
-<pre class="language-cmake"><code v-pre class="language-cmake">CPMAddPackage(&quot;gh:saucer-project/saucer#master&quot;)
+<pre class="language-cmake"><code v-pre class="language-cmake">CPMAddPackage(&quot;gh:saucer/saucer#master&quot;)
 target_link_libraries(&lt;target&gt; saucer)</code></pre>
 </doc-codeblock></div>
 </doc-tab>
@@ -224,7 +224,7 @@ target_link_libraries(&lt;target&gt; saucer)</code></pre>
 <div class="codeblock-title">CMakeLists.txt</div>
 <pre class="language-cmake"><code v-pre class="language-cmake">include(FetchContent)
 
-FetchContent_Declare(saucer GIT_REPOSITORY &quot;https://github.com/saucer-project/saucer&quot;)
+FetchContent_Declare(saucer GIT_REPOSITORY &quot;https://github.com/saucer/saucer&quot;)
 FetchContent_MakeAvailable(saucer)
 
 target_link_libraries(&lt;target&gt; saucer)</code></pre>
@@ -234,7 +234,7 @@ target_link_libraries(&lt;target&gt; saucer)</code></pre>
 <template #title>Git Submodule</template>
 <div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <div class="codeblock-title">Command Line</div>
-<pre class="language-bash"><code v-pre class="language-bash">git clone https://github.com/saucer-project/saucer</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">git clone https://github.com/saucer/saucer</code></pre>
 </doc-codeblock></div>
 <div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <div class="codeblock-title">CMakeLists.txt</div>
