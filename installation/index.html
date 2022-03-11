@@ -24,12 +24,12 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/resources/css/retype.css?v=1.11.2.699397810858" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.11.2.700278714490" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.699397810858" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.700278714490" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.11.2" defer data-turbo-track="reload"></script>
-    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.699397810858" defer></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.699397810858" defer></script>
+    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.700278714490" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.700278714490" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -210,6 +210,12 @@
 <p>Saucer is meant to be used with CMake.<br />
 You can also use other Build Systems but it is recommended to use CMake for the best and most convenient experience.</p>
 <doc-tabs>
+<doc-tab id="cli">
+<template #title>CLI</template>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">saucer init &lt;name&gt;</code></pre>
+</doc-codeblock></div>
+</doc-tab>
 <doc-tab id="cpm">
 <template #title>CPM</template>
 <div class="codeblock-wrapper"><doc-codeblock line-numbers>
@@ -240,6 +246,34 @@ target_link_libraries(&lt;target&gt; saucer)</code></pre>
 <div class="codeblock-title">CMakeLists.txt</div>
 <pre class="language-cmake"><code v-pre class="language-cmake">add_subdirectory(saucer)
 target_link_libraries(&lt;target&gt; saucer)</code></pre>
+</doc-codeblock></div>
+</doc-tab>
+</doc-tabs>
+<doc-anchor-target id="saucer-cli">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#saucer-cli">#</doc-anchor-trigger>
+        <span>Saucer-CLI</span>
+    </h1>
+</doc-anchor-target>
+<p>Saucer also supplies a cli-utility.<br />
+It can help you setup projects and allows you to easily embed dependencies.</p>
+<doc-tabs>
+<doc-tab id="npm">
+<template #title>npm</template>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">npm i -g saucer-app</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">yarn global add saucer-app</code></pre>
+</doc-codeblock></div>
+</doc-tab>
+<doc-tab id="aur">
+<template #title>AUR</template>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">paru -S saucer-cli-git</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">yay -S saucer-cli-git</code></pre>
 </doc-codeblock></div>
 </doc-tab>
 </doc-tabs>
