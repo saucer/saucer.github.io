@@ -24,12 +24,12 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/resources/css/retype.css?v=1.11.2.700329822884" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.11.2.703856722711" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.700329822884" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.703856722711" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.11.2" defer data-turbo-track="reload"></script>
-    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.700329822884" defer></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.700329822884" defer></script>
+    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.703856722711" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.703856722711" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -306,74 +306,6 @@ In case one of your types is not supported by default you can <a href="https://g
             <h5>Note</h5>
 <p>Function overloading is not allowed for exposed functions, meaning there can only be one function with the same name.</p>
         </div>
-    </div>
-</div>
-<doc-anchor-target id="exposing-variables">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#exposing-variables">#</doc-anchor-trigger>
-        <span>Exposing Variables</span>
-    </h2>
-</doc-anchor-target>
-<p>To expose a variable you need to wrap it in a <kbd>variable</kbd>.<br />
-<code v-pre>saucer::variable</code> is a container like wrapper that can detect changes on itself.</p>
-<p>Any changes to the <kbd>variable</kbd> on the c++ side will be automatically transferred to JavaScript.
-The exposed <kbd>variable</kbd> in JavaScript is wrapped in a <kbd>Proxy</kbd>, if you assign anything to it the c++ variable will also be updated.</p>
-<div class="mb-6 overflow-hidden border rounded-md docs-columns dark:border-dark-650" style="grid-template-columns: repeat(1, minmax(0, 1fr));">
-    <div class="flex items-center px-5 py-3 font-medium leading-snug text-gray-900 border-b border-gray-200 dark:border-dark-650 dark:text-white">
-        <span>Example</span>
-    </div>
-    <div class="px-5 py-3 docs-columns-content">
-<div class="codeblock-wrapper"><doc-codeblock>
-<div class="codeblock-title">C++</div>
-<pre class="language-cpp"><code v-pre class="language-cpp">saucer::variable&lt;int&gt; test(10);
-smartview.expose(&quot;test&quot;, test);
-
-test.assign(30);</code></pre>
-</doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
-<div class="codeblock-title">JavaScript</div>
-<pre class="language-javascript"><code v-pre class="language-javascript">console.log(window.test.valueOf()); // -&gt; Will print 30
-window.test.value = 20;</code></pre>
-</doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
-<div class="codeblock-title">C++</div>
-<pre class="language-cpp"><code v-pre class="language-cpp">std::cout &lt;&lt; test.read() &lt;&lt; std::endl; // -&gt; Will print 20</code></pre>
-</doc-codeblock></div>
-    </div>
-</div>
-<doc-anchor-target id="usage-of-variable">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage-of-variable">#</doc-anchor-trigger>
-        <span>Usage of Variable</span>
-    </h3>
-</doc-anchor-target>
-<p>To assign to a variable use the <code v-pre>assign</code> method.
-To read the current value of the variable use the <code v-pre>read</code> method.</p>
-<p>If you need to freely work with the variable you can make use of the <code v-pre>modify</code> method, it returns a proxy to the variable which will allow you to access the raw value and work with it.<br />
-The proxy will detect any changes when it is destructed.</p>
-<div class="mb-6 overflow-hidden border rounded-md docs-columns dark:border-dark-650" style="grid-template-columns: repeat(1, minmax(0, 1fr));">
-    <div class="flex items-center px-5 py-3 font-mono leading-snug text-white docs-columns-code-title">
-        <span>Example</span>
-    </div>
-    <div class="docs-columns-code docs-columns-content">
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-cpp"><code v-pre class="language-cpp">saucer::variable&lt;std::vector&lt;int&gt;&gt; a_vector;
-
-{
-    auto writable_vector = a_vector.modify();
-    writable_vector-&gt;push_back(10);
-    writable_vector-&gt;push_back(20);
-    writable_vector-&gt;push_back(30);
-
-    for (const auto&amp; item : *writable_vector)
-    {
-        std::cout &lt;&lt; item &lt;&lt; std::endl;
-    }
-}
-
-a_vector.assign(std::vector&lt;int&gt;{});
-std::vector&lt;int&gt; a_copy = a_vector.read();</code></pre>
-</doc-codeblock></div>
     </div>
 </div>
 <doc-anchor-target id="evaluating-javascript">
