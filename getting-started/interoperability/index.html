@@ -24,12 +24,12 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/resources/css/retype.css?v=1.11.2.703856722711" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.11.2.705414794420" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.703856722711" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.705414794420" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.11.2" defer data-turbo-track="reload"></script>
-    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.703856722711" defer></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.703856722711" defer></script>
+    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.705414794420" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.705414794420" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -223,9 +223,7 @@ To work around this you can make use of the <code v-pre>simple_smartview</code>.
     <div class="docs-columns-code docs-columns-content">
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">saucer::smartview smartview;
-saucer::variable&lt;int&gt; synced_int;
-
-smartview.expose&lt;saucer::serializers::json&gt;(&quot;synced_int&quot;, synced_int);</code></pre>
+smartview.expose&lt;saucer::serializers::json&gt;(&quot;test&quot;, [](){return 10;});</code></pre>
 </doc-codeblock></div>
     </div>
 </div>
@@ -239,9 +237,7 @@ smartview.expose&lt;saucer::serializers::json&gt;(&quot;synced_int&quot;, synced
     <div class="docs-columns-code docs-columns-content">
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">saucer::simple_smartview&lt;saucer::serializers::json&gt; smartview;
-saucer::variable&lt;int&gt; synced_int;
-
-smartview.expose(&quot;synced_int&quot;, synced_int);</code></pre>
+smartview.expose(&quot;test&quot;, [](){return 10;});</code></pre>
 </doc-codeblock></div>
     </div>
 </div>
