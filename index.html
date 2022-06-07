@@ -24,11 +24,11 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/resources/css/retype.css?v=1.11.2.705414794420" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.11.2.707927534495" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.705414794420" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.707927534495" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.11.2" defer data-turbo-track="reload"></script>
-    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.705414794420" defer></script>
+    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.707927534495" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -263,6 +263,7 @@ We provide easy methods to interact with <img src="https://cdn.worldvectorlogo.c
 <ul class="contains-task-list">
 <li class="task-list-item"><input disabled="disabled" type="checkbox" /> Clipboard Module</li>
 <li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Transparent Window</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Offscreen Rendering</li>
 <li class="task-list-item"><input disabled="disabled" type="checkbox" /> Input Module <em>(Keyboard / Mouse)</em></li>
 <li class="task-list-item"><input disabled="disabled" type="checkbox" /> Desktop Notifications Module</li>
 </ul>
@@ -326,7 +327,7 @@ We provide easy methods to interact with <img src="https://cdn.worldvectorlogo.c
 <tr>
 <th>Platform</th>
 <th>Windows</th>
-<th>Linux / macOS¹</th>
+<th>Linux / Universal¹</th>
 <th>macOS</th>
 </tr>
 </thead>
@@ -359,7 +360,7 @@ We provide easy methods to interact with <img src="https://cdn.worldvectorlogo.c
             </svg>
         </div>
         <div class="pr-5 ml-3">
-<p>¹ The current linux build of saucer <em>should</em> work on macOS too.<br />
+<p>¹ The current linux build of saucer uses Qt6 and no platform specific code, so it <em>should</em> work on every operating system that Qt supports.<br />
 However this has not yet been tested.</p>
         </div>
     </div>
