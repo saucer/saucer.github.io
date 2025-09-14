@@ -12,14 +12,19 @@ header.header {
 
 /* Rapide Customization */
 
+:root {
+  --sl-color-text-accent: var(--sl-color-purple);
+  --sl-color-accent-high: var(--sl-color-purple-high);
+
+  --sl-color-green: var(--sl-color-purple);
+  --sl-color-green-low: var(--sl-color-purple-low);
+  --sl-color-green-high: var(--sl-color-purple-high);
+  --sl-color-green-accent: var(--sl-color-purple-accent);
+  --sl-color-green-accent-invert: var(--sl-color-purple-accent-invert);
+}
+
 .sl-link-button {
   &.primary {
-    background-color: var(--sl-color-purple-low);
     border: 1px solid var(--sl-color-purple);
-    color: var(--sl-color-purple-high);
-
-    &:is(:hover, :focus-visible) {
-      color: var(--sl-color-purple-accent-invert);
-    }
   }
 }
