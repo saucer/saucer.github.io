@@ -1,0 +1,25 @@
+@layer starlight, rapdie;
+
+.site-title {
+  font-size: 1rem;
+  color: var(--sl-color-acccent-low);
+}
+
+header.header {
+  backdrop-filter: blur(16px);
+  background-color: transparent;
+}
+
+/* Rapide Customization */
+
+.sl-link-button {
+  &.primary {
+    background-color: var(--sl-color-purple-low);
+    border: 1px solid var(--sl-color-purple);
+    color: var(--sl-color-purple-high);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--sl-color-purple-accent-invert);
+    }
+  }
+}

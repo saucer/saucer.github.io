@@ -1,0 +1,29 @@
+---
+import { Code as Default } from "@astrojs/starlight/components";
+
+export interface Props
+{
+    code: string;
+    lang: string;
+}
+
+const response = await fetch(
+    "https://api.github.com/repos/saucer/saucer/releases/latest",
+    {
+        headers: [
+            ["Accept", "application/vnd.github+json"],
+            ["X-GitHub-Api-Version", "2022-11-28"],
+        ],
+    },
+);
+
+const parsed = await response.json();
+const version = parsed["tag_name"] ?? "v7.0.0";
+
+const { code, lang } = Astro.props;
+const versionedCode = code.replace("$VERSION$", version);
+---
+
+<Default code={versionedCode} lang={lang}>
+  <slot />
+</Default>

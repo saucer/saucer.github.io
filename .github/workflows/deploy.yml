@@ -1,0 +1,51 @@
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+name: 🏗️ Deploy
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🍃 Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org"
+
+      - name: 🍃 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: 🔨 Build
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: 🚀 Upload Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: build
+
+      - name: 📃 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 Deploy
+        id: deployment
+        uses: actions/deploy-pages@v2

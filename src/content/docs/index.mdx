@@ -1,0 +1,52 @@
+---
+title: Saucer
+template: splash
+hero:
+  actions:
+    - text: Documentation
+      link: /getting-started/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/saucer/saucer
+      icon: external
+      variant: minimal
+    - text: View on CodeBerg
+      link: https://codeberg.org/saucer/saucer
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, Code } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <Card title="Frontend Independent" icon="rocket">
+    Bring your favorite frontend framework, integration into saucer is dead
+    simple.
+  </Card>
+  <Card title="Cross Platform" icon="laptop">
+    Deploy to Windows, MacOS and Linux - No code changes required.
+  </Card>
+  <Card title="Interoperability" icon="puzzle">
+    Evaluate JavaScript expressions from C++ and expose native functions with
+    ease!
+  </Card>
+  <Card title="FOSS" icon="puzzle">
+    Saucer is, and will always be, Free and Open Source. <br />
+    <i>Licensed under MIT where applicable</i>
+  </Card>
+  <Card title="Small" icon="seti:slim">
+    By using the the operating systems native web renderer it's possible to
+    produce binaries that are just ~250KB.
+  </Card>
+  <Card title="Bindings" icon="external">
+    Even though saucer is primarily a C++ library, there are several community
+    bindings available!
+  </Card>
+  <Card title="Customizable" icon="seti:json">
+    Saucer offers a convenient API to access it's internals, thus allowing for
+    extensive customization!
+  </Card>
+  <Card title="Thread-Safe" icon="seti:lock">
+    All APIs are thread-safe and support C++20 coroutines where applicable.
+  </Card>
+</CardGrid>

@@ -1,0 +1,75 @@
+---
+import Default from "@astrojs/starlight/components/Hero.astro";
+import { LinkButton } from "@astrojs/starlight/components";
+
+import Logo from "./Logo";
+
+const route = Astro.locals.starlightRoute;
+
+const { actions } = route.entry.data.hero ?? {};
+const isHomepage = route.id === "";
+---
+
+{
+  isHomepage
+      ? (
+    <div class="hero">
+      <Logo className="logo" client:load />
+      {
+        actions && actions.length > 0 && (
+          <div class="sl-flex actions">
+            {
+              actions.map(
+                  (
+                      {
+                          attrs: { class: className, ...attrs } = {},
+                          icon,
+                          link: href,
+                          text,
+                          variant,
+                      },
+                  ) => (
+                <LinkButton
+                  {href}
+                  {variant}
+                  icon={icon?.name}
+                  class:list={[className]}
+                  {...attrs}
+                >
+                  {text}
+                  {icon?.html && <Fragment set:html={icon.html} />}
+                </LinkButton>
+              ),
+              )
+            }
+          </div>
+        )
+      }
+    </div>
+  )
+  : <Default><slot /></Default>
+}
+
+<style>
+.hero {
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.hero :global(.logo) {
+  object-fit: contain;
+  width: min(70%, 20rem);
+  height: auto;
+  margin-inline: auto;
+}
+
+.actions {
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

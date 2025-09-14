@@ -1,0 +1,100 @@
+---
+title: Installation
+---
+
+import Code from "../../../components/Code.astro";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+import CPMCode from "./cpm.cmake?raw";
+import FetchContentCode from "./FetchContent.cmake?raw";
+
+> On this page you'll learn how to install saucer through any of the officially supported ways.
+
+## Prerequisites
+
+Before installing saucer, ensure your development environment meets the following requirements:
+
+- A **C++23** compatible compiler
+- CMake (recommended installation method)
+
+## Dependencies
+
+Saucer relies on certain system-level dependencies to run.  
+These dependencies are **usually pre-installed** on the respective platform.
+
+<Tabs>
+  <TabItem value="windows" label="Windows" default>
+    On Windows the [WebView2
+    Runtime](https://developer.microsoft.com/microsoft-edge/webview2/#download-section)
+    is required, which comes <u>pre-installed since Windows 11</u>.
+  </TabItem>
+  <TabItem value="macos" label="MacOS" default>
+    Saucer uses Cocoa and WKWebView on MacOS, which are both part of the
+    operating system.
+  </TabItem>
+  <TabItem value="linux" label="Linux" default>
+    Saucer supports both WebKitGtk and Qt (5 & 6) on Linux.
+
+    The **default backend is WebKitGtk**, but it can be configured through the `saucer_backend` CMake-Option.
+
+    Both are well established in the Linux world and most systems have either of them installed already.
+    In case you have neither installed on your system, you may refer to your distribution on how to install the following packages:
+
+    :::caution
+    Package names may differ on your distribution!
+    :::
+
+    <Tabs>
+      <TabItem value="webkit" label="WebKitGtk" default>
+        <ul>
+          <li>gtk4</li>
+          <li>webkitgtk-6.0</li>
+        </ul>
+      </TabItem>
+      <TabItem value="qt" label="Qt" default>
+        <ul>
+          <li>qt5-qtwebengine</li>
+          <li>qt5-qtwebchannel</li>
+          <li>qt5-qtbase-gui</li>
+          <li>qt5-qtbase</li>
+        </ul>
+
+        _...or if you're targetting Qt6:_
+
+        <ul>
+          <li>qt6-qtwebengine</li>
+          <li>qt6-qtwebchannel</li>
+          <li>qt6-qtbase-gui</li>
+          <li>qt6-qtbase</li>
+        </ul>
+      </TabItem>
+    </Tabs>
+
+  </TabItem>
+</Tabs>
+
+## Installation Methods
+
+<Tabs>
+  <TabItem value="cpm" label="CPM (Recommended)" icon="download">
+    <Code code={CPMCode} lang="cmake" />
+    ```cmake
+    target_link_libraries(${PROJECT_NAME} [PRIVATE|PUBLIC] saucer::saucer)
+    ```
+  </TabItem>
+  <TabItem value="cmake" label="FetchContent" icon="download">
+    <Code code={FetchContentCode} lang="cmake" />
+    ```cmake
+    target_link_libraries(${PROJECT_NAME} [PRIVATE|PUBLIC] saucer::saucer)
+    ```
+  </TabItem>
+  <TabItem value="prebuilt" label="Pre-Built" icon="puzzle">
+
+:::caution
+This method is **strongly discouraged** and **not officially supported**. Use CMake whenever possible.
+:::
+
+The [GitHub Workflows](https://github.com/saucer/saucer/actions/workflows/build.yml) automatically produce a pre-built artifact for Windows that you can link against manually.
+
+  </TabItem>
+</Tabs>
