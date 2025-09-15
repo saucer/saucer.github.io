@@ -1,0 +1,76 @@
+---
+title: CMake Configuration
+---
+
+> This page documents several the CMake Configuration options
+
+## Backend
+
+Define the backend to use. By default, the most appropriate for your platform will be used.  
+The following options are available:
+
+- _Default_
+- Qt5
+- Qt6
+- WebKit
+- WebKitGtk
+- WebView2
+
+```cmake title="Example: Use Qt6 backend"
+set(saucer_backend "Qt6")
+```
+
+## Serializer
+
+Define the serializer to use. By default, a serializer based on [`glaze`](https://github.com/stephenberry/glaze) will be used.  
+The following options are available:
+
+- Glaze
+- Rflpp
+- None _(bring your own)_
+
+```cmake title="Example: Use Rflpp serializer"
+set(saucer_serializer "Rflpp")
+```
+
+## WebView2 Version
+
+This option defines which version of the [WebView2 NuGet-Package](https://www.nuget.org/packages/microsoft.web.webview2) will be used.
+
+```cmake title="Example: Custom WebView2 version"
+set(saucer_webview2_version "1.0.2783-prerelease")
+```
+
+## MacOS Private API
+
+:::note
+When submitting an application to the Apple AppStore, it is recommended to turn this off.
+:::
+
+Define whether or not private MacOS APIs may be used. This is **enabled** by default.  
+Disabling will have the following consequences:
+
+- Custom Schemes will not be treated as secure
+- The [MediaDevices](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices) JavaScript API may not be available
+- Dev-Tools will not be available
+- `webview::set_background()` will cease to function
+- `navigation::redirection()` will always return `false`
+- `navigation::user_initiated()` will always return `false`
+
+```cmake title="Example: Disable Private API"
+set(saucer_private_webkit OFF)
+```
+
+## MSVC Mutex
+
+Version `17.10` of the Microsoft STL introduced `constexpr` mutex constructors (see [changelog](https://github.com/microsoft/STL/wiki/VS-2022-Changelog#vs-2022-1710)).
+This change includes the following note:
+
+> Note: Programs that aren't following the documented restrictions on binary compatibility may encounter null dereferences in mutex machinery.
+
+This change is known to have caused crashes in the Java Bindings for saucer.
+It is thus recommended to enable this option when developing language bindings for languages that ship their own Visual C++ Runtime.
+
+```cmake title="Example: Enable MSVC Hack"
+set(saucer_msvc_hack ON)
+```

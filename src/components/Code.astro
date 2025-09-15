@@ -1,7 +1,8 @@
 ---
 import { Code as Default } from "@astrojs/starlight/components";
+import type { ExpressiveCodeBlockProps } from "@astrojs/starlight/expressive-code";
 
-export interface Props
+export interface Props extends ExpressiveCodeBlockProps
 {
     code: string;
     lang: string;
@@ -20,10 +21,10 @@ const response = await fetch(
 const parsed = await response.json();
 const version = parsed["tag_name"] ?? "v7.0.0";
 
-const { code, lang } = Astro.props;
+const { code, lang, ...props } = Astro.props;
 const versionedCode = code.replace("$VERSION$", version);
 ---
 
-<Default code={versionedCode} lang={lang}>
+<Default code={versionedCode} lang={lang} {...props}>
   <slot />
 </Default>

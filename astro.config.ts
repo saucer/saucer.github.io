@@ -1,7 +1,9 @@
 import { defineConfig } from "astro/config";
-import starlight from "@astrojs/starlight";
 
 import react from "@astrojs/react";
+import starlight from "@astrojs/starlight";
+
+import starlightAutoSidebar from "starlight-auto-sidebar";
 import starlightThemeRapide from "starlight-theme-rapide";
 
 export default defineConfig({
@@ -18,13 +20,14 @@ export default defineConfig({
                 src: "./src/assets/logo.svg",
             },
             sidebar: [
-                { label: "Getting Started", link: "/getting-started/" },
+                { label: "Getting Started", autogenerate: { directory: "/getting-started/" } },
             ],
             components: {
                 Hero: "./src/components/Hero.astro",
                 SiteTitle: "./src/components/Title.astro",
             },
             plugins: [
+                starlightAutoSidebar(),
                 starlightThemeRapide(),
             ],
             favicon: "/favicon.ico",
