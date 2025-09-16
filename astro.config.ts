@@ -21,6 +21,7 @@ export default defineConfig({
             },
             sidebar: [
                 { label: "Getting Started", autogenerate: { directory: "/getting-started/" } },
+                { label: "Webview", autogenerate: { directory: "/webview/" } },
             ],
             components: {
                 Hero: "./src/components/Hero.astro",

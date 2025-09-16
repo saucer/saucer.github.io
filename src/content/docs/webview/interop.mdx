@@ -1,0 +1,151 @@
+---
+title: Interoperability
+---
+
+> This page documents how interoperability between C++ and JavaScript works
+
+:::note
+To use the features documented on this page, you need to use a `saucer::smartview`.  
+Interoperability is not available for `saucer::webview`.
+:::
+
+## Exposing Functions
+
+Exposing Functions is a simple as calling `expose`.
+The function will then be available from JavaScript with the given name and parameters.
+
+```cpp title="Example: Exposing a multiplication function"
+webview->expose("multiply", [](double a, double b) {
+    return a * b;
+});
+```
+
+In the example shown above, the function would be callable from JavaScript as follows:
+
+```js title="Example: Calling multiply from JavaScript"
+const result = await saucer.exposed.multiply(5, 10);
+```
+
+Function Parameters are automatically type-checked:
+
+```js title="Example: Automatic Type-Checking" frame="terminal" showLineNumbers=false del="[Error]"
+> await saucer.exposed.multiply("5", "10")
+[Error] Expected parameter 0 to be of type 'double'
+```
+
+:::tip
+It is also possible to call exposed functions via `saucer.call("multiply", [5, 10])`.  
+:::
+
+## Executing and Evaluating JavaScript
+
+It is also possible to call JavaScript code and capture the result:
+
+```cpp title="Example: Evaluating JavaScript"
+auto random = co_await webview->evaluate<double>("Math.random()");
+auto pow = co_await webview->evaluate<double>("Math.pow({}, {})", 2, 5);
+```
+
+In case the result is not of importance to you, it is advised to use `execute` instead.
+
+```cpp title="Example: Executing JavaScript"
+webview->execute("console.log({})", saucer::make_args(1, "Test", std::vector<int>{4, 2}));
+```
+
+:::tip
+The utility `saucer::make_args` can be used to forward multiple function arguments to a function without having to use a format specifier for each of the arguments.
+:::
+
+You may have noticed, that `evaluate` as well as `execute` take `format_string`s.
+Thus it can be difficult to pass in code that is not known at compile-time _(as strings are serialized to JavaScript and will thus contain quotes)_.
+
+To avoid the automatic quoting of strings, you can use `saucer::unquoted`:
+
+```cpp title="Example: Using 'saucer::unquoted'"
+webview->execute("{}({})", saucer::unquoted{"console.log"}, "42");
+```
+
+## Advanced Usage
+
+All exposed functions return Promises in JavaScript. As seen above, in most use-cases a simple result is returned.
+However, it is also possible to reject the promise in JavaScript if desired.
+
+There are two ways to do this, by returning a `std::expected` or by taking a `saucer::executor`.
+
+### Returning `std::expected`
+
+```cpp title="Example: Returning 'std::expected'"
+webview->expose("divide", [](double a, double b) -> std::expected<double, std::string> {
+    if (b == 0) {
+        return std::unexpected{"Divisor must not be zero"};
+    }
+    return a / b;
+});
+```
+
+```js title="Example: Promise Rejection" frame="terminal" showLineNumbers=false del="[Error]"
+> await saucer.exposed.divide(10, 0)
+[Error] Divisor must not be zero
+```
+
+:::note
+This also works when using coroutines:
+
+```cpp title="Example: Returning 'std::expected' with coroutines"
+webview->expose("divide", [](double a, double b) -> coco::task<std::expected<double, std::string>> {
+    if (b == 0) {
+        co_return std::unexpected{"Divisor must not be zero"};
+    }
+    co_return a / b;
+});
+```
+
+:::
+
+### Using `saucer::executor`
+
+Instead of resolving/rejecting the JavaScript Promise by returning a value, you can also take a `saucer::executor`
+as the last parameter of your exposed function to manually handle the promise.
+
+```cpp title="Example: Using 'saucer::executor'"
+webview->expose("divide", [](double a, double b, const saucer::executor<double>& exec) {
+    const auto& [resolve, reject] = exec;
+
+    if (b == 0) {
+        return reject("Divisor must not be zero");
+    }
+
+    return resolve(a / b);
+});
+```
+
+Another advantage of using an executor is that you are in control of the Promises' lifetime.  
+This means that you can spawn a thread and resolve the Promise at a later time.
+
+```cpp title="Example: Executor Lifetime"
+webview->expose("wait", [](saucer::executor<double> exec) {
+    std::thread t{[exec = std::move(exec)] {
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        exec.resolve(42);
+    }};
+    t.detach();
+});
+```
+
+In the examples above, `saucer::executor` was only used with its default error type (`std::string_view`).  
+It should be noted, that executors can also use different error-types:
+
+```cpp title="Example: Executor with different Error-Type"
+webview->expose("error", [](const saucer::executor<void, double>& exec) {
+    exec.reject(42);
+});
+```
+
+## User Defined Types
+
+The default serializer(s) support automatic serialization of aggregates, primitives, as well as various STL types by default.
+
+In case you need to add support for types that are not supported out of the box, please refer to the documentation of your respective serializer:
+
+- [glaze](https://github.com/stephenberry/glaze) _(Default)_: [Documentation](https://github.com/stephenberry/glaze/blob/main/docs/custom-serialization.md)
+- [reflect-cpp](https://github.com/getml/reflect-cpp): [Documentation](https://rfl.getml.com/custom_parser/)
