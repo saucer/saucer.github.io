@@ -1,0 +1,186 @@
+---
+title: Events
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+> This page documents various webview events
+
+## Available Events
+
+<Tabs>
+  <TabItem value="permission" label="Permission">
+   This event is emitted when a web-page requests a permission.
+
+    ```cpp
+    webview->on<saucer::webview::event::permission>([](const std::shared_ptr<saucer::permission::request>&) -> saucer::status {
+        // ...
+    });
+    ```
+
+    The request holds the following information:
+
+    * `request->uri()`
+      > The web-page that initiated this request
+
+    * `request->type()`
+      > The type (`saucer::permission::type`) of the permission request. This can be one (or a combination) of the following:
+      > - unknown
+      > - audio_media
+      > - video_media
+      > - desktop_media
+      > - mouse_lock
+      > - device_info
+      > - location
+      > - clipboard
+      > - notification
+
+    Subscribers of this event can accept (`request->accept(true)`) or deny (`request->accept(false)`) this request.
+    In case the request is ignored, it will be denied by default.
+
+  </TabItem>
+  <TabItem value="fullscreen" label="Fullscreen">
+    This event is emitted when a web-page tries to go into fullscreen.
+
+    ```cpp
+    webview->on<saucer::webview::event::fullscreen>([](bool fullscreened) -> saucer::policy {
+        // ...
+    });
+    ```
+
+    Subscribers of this event can block fullscreening by returning `saucer::policy::block` or allow fullscreening by returning `saucer::policy::allow`.
+
+  </TabItem>
+  <TabItem value="dom_ready" label="DomReady">
+    This event is emitted when the DOM is ready.
+
+    ```cpp
+    webview->on<saucer::webview::event::dom_ready>([]() {
+        // ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="navigated" label="Navigated">
+    This event is emitted when a navigation finishes.
+
+    ```cpp
+    webview->on<saucer::webview::event::navigated>([](const saucer::uri&) {
+        // ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="navigate" label="Navigate">
+    This event is emitted when a navigation is started / requested.
+
+    ```cpp
+    webview->on<saucer::webview::event::navigate>([](const saucer::navigation&) -> saucer::policy {
+        // ...
+    });
+    ```
+
+    The navigation request holds the following information:
+
+    * `request->url()`
+      > The requested URL
+
+    * `request->new_window()`
+      > Whether or not the request wants to open a new window
+
+    * `request->redirection()`
+      > Whether or not the request was initiated by a redirection
+
+    * `request->user_initiated()`
+      > Whether or not the request was user initiated
+
+  </TabItem>
+  <TabItem value="message" label="Message">
+    This event is emitted when an RPC message is sent.
+
+    ```cpp
+    webview->on<saucer::webview::event::message>([](std::string_view) -> saucer::status {
+        // ...
+    });
+    ```
+
+    If the message was handled successfully, `saucer::status::handled` should be returned.
+    Otherwise, `saucer::status::unhandled` should be returned to allow other subscribers to try and handle this event.
+
+  </TabItem>
+  <TabItem value="request" label="Request">
+    This event is emitted when a web-resource is requested.
+
+    :::caution
+    Please note that this event behaves differently among various backends.
+    For example, on WebKitGtk, this event will be fired less frequently in comparison to e.g. WebView2.
+    :::
+
+    ```cpp
+    webview->on<saucer::webview::event::request>([](const saucer::uri&) {
+        // ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="favicon" label="Favicon">
+    This event is emitted when a websites favicon was loaded.
+
+    ```cpp
+    webview->on<saucer::webview::event::favicon>([](const saucer::icon&) {
+        // ...
+    });
+    ```
+
+    The loaded icon will be passed as a function parameter. It is possible to inspect the raw-bytes of the icon or save it to disk.
+
+  </TabItem>
+  <TabItem value="title" label="Title">
+    This event is emitted when the title of a web-page changes.
+
+    ```cpp
+    webview->on<saucer::webview::event::title>([](std::string_view) {
+        // ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="load" label="Load">
+    This event is emitted when the loading state of the web-page changes.
+
+    ```cpp
+    webview->on<saucer::webview::event::load>([](const saucer::state&) {
+        // ...
+    });
+    ```
+
+    The state can be one of the following:
+
+    * `saucer::state::started`
+    * `saucer::state::finished`
+
+  </TabItem>
+</Tabs>
+
+## Event Management
+
+In the examples seen above, you can see how to register events.  
+Something that was not shown above is how to register a non `clearable` event.
+
+```cpp title="Example: Non-clearable Event"
+webview->on<saucer::webview::event::title>({{.func = [](std::string_view) { /*...*/ }, .clearable = false}});
+```
+
+As with [scripts](../scripts), an ID will be returned on registration which can later be used to remove the event registration.
+
+```cpp title="Example: Unregister Event"
+webview->off(saucer::webview::event::title, id);
+```
+
+You can also remove all `clearable` events by omitting the ID.
+
+```cpp title="Example: Unregister Event"
+webview->off(saucer::webview::event::title);
+```
