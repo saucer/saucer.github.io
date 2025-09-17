@@ -3,6 +3,8 @@ import Default from "@astrojs/starlight/components/Hero.astro";
 import { LinkButton } from "@astrojs/starlight/components";
 
 import Logo from "./Logo";
+import RotatingText from "./Text";
+import Background from "./Background";
 
 const route = Astro.locals.starlightRoute;
 
@@ -13,8 +15,20 @@ const isHomepage = route.id === "";
 {
   isHomepage
       ? (
-    <div class="hero">
+    <Background className="hero" client:load>
       <Logo className="logo" client:load />
+      <p class="tagline">
+        The{" "}
+        <RotatingText
+          className="text"
+          staggerFrom={"last"}
+          staggerDuration={0.025}
+          rotationInterval={5000}
+          texts={["modern", "hackable", "lightweight", "open-source"]}
+          client:load
+        />
+        {" "}C++ webview library
+      </p>
       {
         actions && actions.length > 0 && (
           <div class="sl-flex actions">
@@ -45,30 +59,47 @@ const isHomepage = route.id === "";
           </div>
         )
       }
-    </div>
+    </Background>
   )
   : <Default><slot /></Default>
 }
 
 <style>
 .hero {
+  width: 100%;
+  display: grid;
   margin-left: auto;
   margin-right: auto;
-  display: grid;
-  align-items: center;
   gap: 1rem;
   padding-bottom: 1rem;
+  justify-content: center;
 }
 
 .hero :global(.logo) {
-  object-fit: contain;
   width: min(70%, 20rem);
   height: auto;
+  object-fit: contain;
   margin-inline: auto;
+}
+
+.tagline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  white-space: preserve-spaces;
+  font-weight: 500;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.tagline .text {
+  overflow: hidden;
+  color: var(--sl-color-accent);
 }
 
 .actions {
   gap: 1rem 2rem;
+  padding: 0rem 5rem;
   flex-wrap: wrap;
   justify-content: center;
 }

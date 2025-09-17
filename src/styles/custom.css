@@ -10,9 +10,24 @@ header.header {
   background-color: transparent;
 }
 
+.content-panel:has(.card-grid) {
+  padding: 0;
+
+  .sl-container {
+    max-width: 100%;
+  }
+
+  .card-grid {
+    margin: 0 auto 0 auto;
+    max-width: var(--sl-content-width);
+    padding: 1.5rem var(--sl-content-pad-x);
+  }
+}
+
 /* Rapide Customization */
 
 :root {
+  --sl-color-accent: var(--sl-color-purple);
   --sl-color-text-accent: var(--sl-color-purple);
   --sl-color-accent-low: var(--sl-color-purple-low);
   --sl-color-accent-high: var(--sl-color-purple-high);

@@ -1,4 +1,4 @@
-import { useAnimate } from "framer-motion";
+import { useAnimate } from "motion/react";
 import { type ComponentProps, useEffect } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 
