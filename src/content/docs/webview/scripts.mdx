@@ -1,0 +1,53 @@
+---
+title: Scripts
+sidebar:
+  order: 2
+---
+
+> This page documents how script injection works
+
+## Injection
+
+Saucer offers the ability to inject scripts into web-pages.
+The following attributes can be specified:
+
+- `code`
+
+  > The JavaScript Code to inject
+
+- `run_at`
+
+  > When to run the script, can be one of: `saucer::script::time::creation`, `saucer::script::time::ready`
+
+- `no_frames`
+
+  > If enabled, script will not be injected into sub-frames
+
+- `clearable`
+  > Whether or not this script can be cleared through `webview->uninject()`
+
+```cpp title="Example: Script Injection"
+const auto id = webview->inject({
+    .code   = "console.log('Hello from script!')",
+    .run_at = saucer::script::time::creation,
+});
+```
+
+## Management
+
+As seen in the example above, every time a script is injected, a unique ID is returned.
+This ID can be used to later remove the injected script (regardless of whether or not the script is `clearable`).
+
+```cpp title="Example: Script Uninjection"
+webview->uninject(id);
+```
+
+In case you want to clear all injected scripts, you can also omit the ID.
+
+:::note
+When using the "global" `uninject` overload, only scripts which are `clearable` will be uninjected.
+:::
+
+```cpp title="Example: Script Uninjection"
+webview->uninject();
+```
