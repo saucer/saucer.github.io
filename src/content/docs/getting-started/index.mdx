@@ -23,16 +23,16 @@ Saucer relies on certain system-level dependencies to run.
 These dependencies are **usually pre-installed** on the respective platform.
 
 <Tabs>
-  <TabItem value="windows" label="Windows" default>
+  <TabItem value="windows" label="Windows" >
     On Windows the [WebView2
     Runtime](https://developer.microsoft.com/microsoft-edge/webview2/#download-section)
     is required, which comes <u>pre-installed since Windows 11</u>.
   </TabItem>
-  <TabItem value="macos" label="MacOS" default>
+  <TabItem value="macos" label="MacOS" >
     Saucer uses Cocoa and WKWebView on MacOS, which are both part of the
     operating system.
   </TabItem>
-  <TabItem value="linux" label="Linux" default>
+  <TabItem value="linux" label="Linux" >
     Saucer supports both WebKitGtk and Qt (5 & 6) on Linux.
 
     The **default backend is WebKitGtk**, but it can be configured through the `saucer_backend` CMake-Option.
@@ -45,13 +45,13 @@ These dependencies are **usually pre-installed** on the respective platform.
     :::
 
     <Tabs>
-      <TabItem value="webkit" label="WebKitGtk" default>
+      <TabItem value="webkit" label="WebKitGtk" >
         <ul>
           <li>gtk4</li>
           <li>webkitgtk-6.0</li>
         </ul>
       </TabItem>
-      <TabItem value="qt" label="Qt" default>
+      <TabItem value="qt" label="Qt" >
         <ul>
           <li>qt5-qtwebengine</li>
           <li>qt5-qtwebchannel</li>
