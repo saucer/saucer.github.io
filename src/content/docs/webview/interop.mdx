@@ -1,5 +1,7 @@
 ---
 title: Interoperability
+sidebar:
+  order: 1
 ---
 
 > This page documents how interoperability between C++ and JavaScript works
@@ -37,7 +39,7 @@ Function Parameters are automatically type-checked:
 It is also possible to call exposed functions via `saucer.call("multiply", [5, 10])`.  
 :::
 
-## Executing and Evaluating JavaScript
+## Executing JavaScript
 
 It is also possible to call JavaScript code and capture the result:
 
@@ -53,11 +55,11 @@ webview->execute("console.log({})", saucer::make_args(1, "Test", std::vector<int
 ```
 
 :::tip
-The utility `saucer::make_args` can be used to forward multiple function arguments to a function without having to use a format specifier for each of the arguments.
+The utility `saucer::make_args` can be used to forward multiple function arguments to a function without having to use a format argument for each of the arguments.
 :::
 
 You may have noticed, that `evaluate` as well as `execute` take `format_string`s.
-Thus it can be difficult to pass in code that is not known at compile-time _(as strings are serialized to JavaScript and will thus contain quotes)_.
+Therefore it can be difficult to pass in code that is not known at compile-time _(as strings are serialized to JavaScript and will thus contain quotes)_.
 
 To avoid the automatic quoting of strings, you can use `saucer::unquoted`:
 
@@ -68,7 +70,7 @@ webview->execute("{}({})", saucer::unquoted{"console.log"}, "42");
 ## Advanced Usage
 
 All exposed functions return Promises in JavaScript. As seen above, in most use-cases a simple result is returned.
-However, it is also possible to reject the promise in JavaScript if desired.
+However, it is also possible to reject the JavaScript Promise if desired.
 
 There are two ways to do this, by returning a `std::expected` or by taking a `saucer::executor`.
 
@@ -133,7 +135,7 @@ webview->expose("wait", [](saucer::executor<double> exec) {
 ```
 
 In the examples above, `saucer::executor` was only used with its default error type (`std::string_view`).  
-It should be noted, that executors can also use different error-types:
+It should be noted, that executors (as well as `std::expected`) can also use different error-types:
 
 ```cpp title="Example: Executor with different Error-Type"
 webview->expose("error", [](const saucer::executor<void, double>& exec) {
@@ -143,7 +145,7 @@ webview->expose("error", [](const saucer::executor<void, double>& exec) {
 
 ## User Defined Types
 
-The default serializer(s) support automatic serialization of aggregates, primitives, as well as various STL types by default.
+The default serializer(s) support automatic serialization of aggregates, primitives as well as various STL types by default.
 
 In case you need to add support for types that are not supported out of the box, please refer to the documentation of your respective serializer:
 
