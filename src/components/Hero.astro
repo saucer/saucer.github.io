@@ -15,7 +15,8 @@ const isHomepage = route.id === "";
 {
   isHomepage
       ? (
-    <Background className="hero" client:load>
+    <Background client:load />
+    <div class="hero">
       <Logo className="logo" client:load />
       <p class="tagline">
         The{" "}
@@ -59,20 +60,19 @@ const isHomepage = route.id === "";
           </div>
         )
       }
-    </Background>
+    </div>
   )
   : <Default><slot /></Default>
 }
 
 <style>
 .hero {
-  width: 100%;
   display: grid;
+  align-items: center;
   margin-left: auto;
   margin-right: auto;
   gap: 1rem;
   padding-bottom: 1rem;
-  justify-content: center;
 }
 
 .hero :global(.logo) {
@@ -99,7 +99,6 @@ const isHomepage = route.id === "";
 
 .actions {
   gap: 1rem 2rem;
-  padding: 0rem 5rem;
   flex-wrap: wrap;
   justify-content: center;
 }

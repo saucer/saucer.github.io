@@ -17,7 +17,8 @@ export default function Logo({ ...props }: ComponentProps<"svg">)
         hover(ref.current, {
             y: [-10, 0, 10, 0, -10],
         }, {
-            bounce: 5,
+            bounce: 0.75,
+            bounceDamping: 5,
             duration: 5,
             ease: "linear",
             repeat: Infinity,
