@@ -1,0 +1,177 @@
+---
+enum Feature
+{
+    Embedding,
+    Interop,
+    Events,
+    Schemes,
+    Bindings,
+}
+
+interface Library
+{
+    name: string;
+    url?: string;
+    languages: string[];
+    backends: [string[], string[], string[]];
+    features: { [K in keyof typeof Feature]: "full" | "partial" | "none" };
+}
+
+const libraries: Library[] = [
+    {
+        name: "saucer/saucer",
+        features: {
+            "Embedding": "full",
+            "Interop": "full",
+            "Events": "full",
+            "Schemes": "full",
+            "Bindings": "full",
+        },
+        languages: ["C++", "Rust", "Java", "PHP"],
+        backends: [["WebView2", "Qt5 / Qt6"], ["WebKitGtk", "Qt5 / Qt6"], [
+            "WebKit",
+            "Qt5 / Qt6",
+        ]],
+    },
+    {
+        name: "webview/webview",
+        features: {
+            "Embedding": "none",
+            "Interop": "none",
+            "Events": "none",
+            "Schemes": "none",
+            "Bindings": "full",
+        },
+        languages: ["C++", "Various Others"],
+        backends: [["WebView2"], ["WebKit2Gtk"], ["WebKit"]],
+    },
+    {
+        name: "tauri-apps/wry",
+        features: {
+            "Embedding": "none",
+            "Interop": "partial",
+            "Events": "none",
+            "Schemes": "full",
+            "Bindings": "none",
+        },
+        languages: ["Rust"],
+        backends: [["WebView2"], ["WebKitGtk"], ["WebKit"]],
+    },
+    {
+        name: "wailsapp/wails",
+        features: {
+            "Embedding": "full",
+            "Interop": "partial",
+            "Events": "none",
+            "Schemes": "none",
+            "Bindings": "none",
+        },
+        languages: ["Go"],
+        backends: [["WebView2"], ["WebKit2Gtk"], ["WebKit"]],
+    },
+];
+
+import { Icon } from "@astrojs/starlight/components";
+---
+
+<table>
+  <tr>
+    <th rowspan="2">Name</th>
+    <th rowspan="2">Language(s)</th>
+    <th rowspan="2">Embedding</th>
+    <th rowspan="2">Interop</th>
+    <th rowspan="2">Events</th>
+    <th rowspan="2">Custom&nbsp;Schemes</th>
+    <th rowspan="2">Bindings</th>
+    <th colspan="3" class="no-bottom">Backends</th>
+  </tr>
+  <tr class="sub-header">
+    <th>
+      <Icon name="seti:windows" />
+    </th>
+    <th>
+      <Icon name="linux" />
+    </th>
+    <th>
+      <Icon name="apple" />
+    </th>
+  </tr>
+  {
+    libraries.map(item => (
+      <tr>
+        <td>
+          <a
+            href={item.url ?? `https://github.com/${item.name}`}
+            target="_blank"
+          >
+            {item.name}
+          </a>
+        </td>
+        <td>
+          {item.languages.join(", ")}
+        </td>
+        {
+          Object.values(Feature)
+              .filter(key => typeof key !== "number")
+              .map(feature => item.features[feature as keyof typeof Feature])
+              .map(status => (
+            <td>
+              {
+                status == "full"
+                    ? <Icon name="approve-check" color="green" />
+                : status == "partial"
+                ? <Icon name="forward-slash" color="yelllow" />
+                : <Icon name="close" color="red" />
+              }
+            </td>
+          ))
+        }
+        <td>
+          <ul>{item.backends[0].map(item => <li>{item}</li>)}</ul>
+        </td>
+        <td>
+          <ul>{item.backends[1].map(item => <li>{item}</li>)}</ul>
+        </td>
+        <td>
+          <ul>{item.backends[2].map(item => <li>{item}</li>)}</ul>
+        </td>
+      </tr>
+    ))
+  }
+</table>
+
+<style>
+td {
+  padding: 0.5rem;
+}
+
+table tr:nth-child(1) > th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.no-bottom {
+  border-bottom: none;
+}
+
+.sub-header {
+  background-color: transparent;
+}
+
+.sub-header th svg {
+  margin: 0 auto 0 auto;
+}
+
+td,
+li {
+  text-wrap: nowrap;
+}
+
+td svg {
+  margin: 0 auto 0 auto;
+}
+
+ul {
+  padding: 0rem 0.5rem 0rem 0.5rem;
+}
+</style>

@@ -25,6 +25,7 @@ export default defineConfig({
                 { label: "Getting Started", autogenerate: { directory: "/getting-started/" } },
                 { label: "Window", autogenerate: { directory: "/window/" } },
                 { label: "Webview", autogenerate: { directory: "/webview/" } },
+                { label: "Misc", autogenerate: { directory: "/misc/" } },
             ],
             components: {
                 Hero: "./src/components/Hero.astro",

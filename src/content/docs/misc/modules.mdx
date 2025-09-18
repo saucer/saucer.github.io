@@ -1,0 +1,38 @@
+---
+title: Modules
+---
+
+> This page documents existing modules
+
+---
+
+Saucer offers the following in-house modules:
+
+- [saucer/desktop](https://github.com/saucer/desktop)
+
+  > File-Picker, Mouse-Position retrieval and URI-Launch support
+
+- [saucer/pdf](https://github.com/saucer/pdf)
+
+  > Export current page as PDF
+
+- [saucer/loop](https://github.com/saucer/loop)
+
+  > "Legacy" loop implementation
+
+## Installation
+
+Modules can be consumed through _CPM.cmake_ or _FetchContent_.
+
+```cmake title="Example: Consume Module through FetchContent"
+FetchContent_Declare(
+  saucer-desktop
+  GIT_REPOSITORY https://github.com/saucer/desktop
+  GIT_TAG        <version>
+)
+
+FetchContent_MakeAvailable(saucer-desktop)
+target_link_libraries(${PROJECT_NAME} [PRIVATE|PUBLIC] saucer::desktop)
+```
+
+Please refer to the respective documentation of the module for more information on configuration or available versions.
