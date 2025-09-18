@@ -29,3 +29,7 @@ header.header {
     color: var(--sl-color-purple-accent-invert);
   }
 }
+
+.sl-container .sl-markdown-content:first-of-type {
+  margin-top: 0;
+}
