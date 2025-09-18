@@ -10,6 +10,12 @@ header.header {
   background-color: transparent;
 }
 
+th,
+td li,
+ul[role="tablist"] li {
+  text-wrap: nowrap;
+}
+
 /* Rapide Customization */
 
 :root {
