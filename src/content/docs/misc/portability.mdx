@@ -1,0 +1,83 @@
+---
+title: Portability
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+> This page documents platform / backend specific behavior or oddities.
+
+---
+
+Saucer tries its best to make all backends behave the same, however, there are certain cases where the backend simply does not provide the required functionality or similar.
+
+<Tabs>
+    <TabItem value="qt" label="Qt">
+    
+        * There is no way to specify a status code for custom schemes, thus the user specified one in `saucer::scheme::response` is ignored
+        * Usage of JS `fetch` with custom schemes (and embedded files for that matter) is only possible since Qt6
+        * `saucer::scheme::response::headers` are only respected since Qt6
+        * `saucer::scheme::request::content()` is only available since Qt6
+        * `saucer::navigation` is only available since Qt6
+        * Force-Dark is only available since Qt6
+        * Partial Decorations might not work properly on Linux
+    
+    </TabItem>
+    <TabItem value="gtk" label="WebKitGtk">
+    
+        As GTK4 aims to be more compatible with Wayland, certain functionalities are currently missing:
+
+        * No support for window icons (`saucer::window::set_icon` does nothing)
+        * There is no way to artificially focus the window (`saucer::window::focus()` does nothing)
+        * There is no way to check whether or not a window is minimized
+        * There is no way to retrieve a windows background color (`saucer::window::background()` returns default value)
+        * There is no way to retrieve or set a windows position (`saucer::window::position()` / `saucer::window::set_position()` do nothing)
+        * GTK4 has no concept of a max-size
+        * Always-On-Top does not work
+
+    </TabItem>
+    <TabItem value="macos" label="MacOS / WebKit">
+
+        The `saucer::webview::options::storage_path` may behave unexpected on MacOS.
+        WKWebView does not offer any way to store webview data to a specific file, instead it associates the data with a UUID through some opaque means.
+        Thus a UUID is derived from the provided `storage_path` given to WKWebView.
+
+        * WKWebView provides no way to access favicons
+        * WKWebView does not allow to control hardware-acceleration
+
+    </TabItem>
+
+</Tabs>
+
+## Browser Flags
+
+It is possible to pass certain browser flags to the underlying webview through `saucer::webview::options::browser_flags`.  
+For all Chromium based webviews (Qt, WebView2) these can be usual chromium flags.
+
+For WebKit based backends (WebKitGtk, WKWebView) these flags behave slightly different.
+
+### WebKitGtk Flags
+
+WebKitGtk accepts browser-flags as key-value pairs in the following form: `property=value`.  
+A list of available properties can be found [in the webkitgtk documentation](https://webkitgtk.org/reference/webkitgtk/stable/class.Settings.html#properties).
+
+```cpp title="Example: Disable JavaScript"
+auto webview = saucer::webview::create({
+    .window        = /*...*/,
+    .browser_flags = {"enable-javascript=false"},
+});
+```
+
+### WKWebView Flags
+
+The WebKit backend also accepts browser-flags as key-value pairs.  
+The available properties are all those of the [`WKWebViewConfiguration`](https://developer.apple.com/documentation/webkit/wkwebviewconfiguration?language=objc) and its members.
+
+```cpp title="Example: WebKit Browser-Flags"
+auto webview = saucer::webview::create({
+    .window        = /*...*/,
+    .browser_flags = {"upgradeKnownHostsToHTTPS=true", "defaultWebpagePreferences.allowsContentJavaScript=false",
+                        "preferences.minimumFontSize=10", "applicationNameForUserAgent=\"Saucer App\""},
+});
+```
