@@ -6,8 +6,10 @@ import { Icon } from "@astrojs/starlight/components";
 
 > This page documents how window decorations work
 
-Window Decorations are commonly defined as the non-client area parts of a window, so things like the Titlebar and Resize-Borders.
-Saucer offers an API to change Window Decorations to allow for custom titlebars, which you might've seen in other apps such as e.g. Spotify or Discord.
+---
+
+Window Decorations are the non-client areas of a window, so things like the Titlebar and Resize-Borders.
+Saucer offers an API to change Window Decorations to allow for custom titlebars, which you might've seen in desktop apps such as e.g. Spotify or Discord.
 
 ```cpp title="Example: Changing Window Decorations"
 window->set_decorations(saucer::window::decoration::partial);
@@ -16,13 +18,14 @@ window->set_decorations(saucer::window::decoration::partial);
 There are three decoration-types to choose from (`none`, `partial`, `full`). Each of them behave differently.
 Their differences are listed in the table below:
 
-| Decoration | Titlebar                                   | Resizable                                  | Aero-Snap[^1]                              | Window Shadows                             | Note                                     |
-| ---------- | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ---------------------------------------- |
-| `none`     | <Icon name="close" color="red"/>           | <Icon name="close" color="red"/>           | <Icon name="close" color="red"/>           | <Icon name="close" color="red"/>           | Prefer `partial` decorations if possible |
-| `partial`  | <Icon name="close" color="red"/>           | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | -                                        |
-| `full`     | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | The default window decorations           |
+| Decoration | Titlebar                                   | Resizable                                  | Aero-Snap[^1]                              | Window Shadows                             | Note                                         |
+| ---------- | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | -------------------------------------------- |
+| `none`     | <Icon name="close" color="red"/>           | <Icon name="close" color="red"/>           | <Icon name="close" color="red"/>           | <Icon name="close" color="red"/>           | Prefer `partial` decorations if possible[^2] |
+| `partial`  | <Icon name="close" color="red"/>           | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | -                                            |
+| `full`     | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | <Icon name="approve-check" color="green"/> | The default window decorations               |
 
 [^1]: Refers to Window-Snapping, e.g. when dragging the window to the top of the screen, the operating system will usually prompt to maximize the window.
+[^2]: Using `decoration::none` can make the app feel alien, because things like window shadows and snapping are disabled and have to be implemented by yourself.
 
 ## Gallery
 
@@ -53,7 +56,7 @@ When the webview `attributes` (`saucer::webview::options{.attributes = true}`) s
 - `data-webview-resize="<edge>"`
 
   > When an element with this attribute is held, the window will start resizing.  
-  > `<edge>` should be one (or a combination[^2]) of the following
+  > `<edge>` should be one (or a combination[^3]) of the following
   >
   > - `t` ≈ "top" window border
   > - `b` ≈ "bottom" window border
@@ -63,4 +66,4 @@ When the webview `attributes` (`saucer::webview::options{.attributes = true}`) s
 - `data-webview-ignore`
   > Add this to elements that trigger any kind of unwanted operation. This can happen when the parent of such an element has a `data-webview` attribute
 
-[^2]: e.g. `data-webview-resize="tr"` to start resizing from the top right border.
+[^3]: e.g. `data-webview-resize="tr"` to start resizing from the top right border.
