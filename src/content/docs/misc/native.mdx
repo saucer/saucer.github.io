@@ -1,0 +1,57 @@
+---
+title: Natives
+---
+
+> This page documents how the native API works
+
+---
+
+Saucer offers access to underlying platform data via its Native-API.
+This can be used to implement certain features that saucer does not support out of the box.
+
+To get started, link against the `saucer::private` target to get access to all required headers and libraries.
+
+```cmake title="Example: Linking private module"
+target_link_libraries(${PROJECT_NAME} [PRIVATE|PUBLIC] saucer::private)
+```
+
+Not all classes support the Native-API, but those that do expose a `native` member function.
+
+```cpp title="Example: Native Access"
+auto native = webview->native();
+```
+
+## Stable Natives
+
+Usually, one would use the "stable" natives, because their layout is guaranteed to be fairly stable.  
+To use the stable natives, include the respective header for your platform, which can be found in `<saucer/modules/stable/{qt, webkit, webkitgtk, webview2}.hpp>`.
+
+```cpp title="Example: Stable Natives (Qt Backend)" ins={1, 6, 7} collapse={3-5, 8-9}
+#include <saucer/modules/stable/qt.hpp>
+
+coco::stray start(saucer::application *)
+{
+    // ...
+    auto native = webview->native();
+    native.webview->setZoomFactor(5);
+    // ...
+}
+```
+
+## Unstable Natives
+
+You can also access a classes' `impl` directly by calling `native<false>()`.
+This is mainly used within the official modules and not recommended for normal use due to its unstable nature.
+To use the unstable natives, include the respective [private header](https://github.com/saucer/saucer/tree/master/private/saucer).
+
+```cpp title="Example: Unstable Natives (Qt Backend)" ins={1, 6, 7} collapse={3-5, 8-9}
+#include <saucer/qt.webview.impl.hpp>
+
+coco::stray start(saucer::application *)
+{
+    // ...
+    auto *const native = webview->native<false>();
+    native->platform->web_page->setAudioMuted(true);
+    // ...
+}
+```

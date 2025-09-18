@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/react": "^4.3.1",
     "@astrojs/starlight": "^0.35.2",
+    "@expressive-code/plugin-collapsible-sections": "^0.41.3",
     "@expressive-code/plugin-line-numbers": "^0.41.3",
     "@mantine/hooks": "^8.3.1",
     "astro": "^5.6.1",
