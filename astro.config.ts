@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
 
+import starlightImageZoom from "starlight-image-zoom";
 import starlightAutoSidebar from "starlight-auto-sidebar";
 import starlightThemeRapide from "starlight-theme-rapide";
 
@@ -22,6 +23,7 @@ export default defineConfig({
             },
             sidebar: [
                 { label: "Getting Started", autogenerate: { directory: "/getting-started/" } },
+                { label: "Window", autogenerate: { directory: "/window/" } },
                 { label: "Webview", autogenerate: { directory: "/webview/" } },
             ],
             components: {
@@ -29,6 +31,7 @@ export default defineConfig({
                 SiteTitle: "./src/components/Title.astro",
             },
             plugins: [
+                starlightImageZoom(),
                 starlightAutoSidebar(),
                 starlightThemeRapide(),
             ],

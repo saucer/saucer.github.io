@@ -41,6 +41,9 @@ importers:
       starlight-auto-sidebar:
         specifier: ^0.1.2
         version: 0.1.2(@astrojs/starlight@0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1)))
+      starlight-image-zoom:
+        specifier: ^0.13.0
+        version: 0.13.0(@astrojs/starlight@0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1)))
       starlight-theme-rapide:
         specifier: ^0.5.1
         version: 0.5.1(@astrojs/starlight@0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1)))
@@ -1849,6 +1852,12 @@ packages:
   starlight-auto-sidebar@0.1.2:
     resolution: {integrity: sha512-7wxR9r/dMGl0ISjO7LxmSQHFdUN/UdiEDWQ+ehv5AL8udEYgItZIvPrUWv5tAg4EF5Okj451mRp8s1bU9f6fmA==}
     engines: {node: '>=18.17.1'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.32.0'
+
+  starlight-image-zoom@0.13.0:
+    resolution: {integrity: sha512-7K/7gshnKooYd4ePy5vtyv1jFoFVNUb8IoXWDcnY69+nxvmLATNrmOzD2M4TJ/aKynPSBSM6j9ia4s/PPy/JGA==}
+    engines: {node: '>=18'}
     peerDependencies:
       '@astrojs/starlight': '>=0.32.0'
 
@@ -4558,6 +4567,16 @@ snapshots:
     dependencies:
       '@astrojs/starlight': 0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1))
       github-slugger: 2.0.0
+
+  starlight-image-zoom@0.13.0(@astrojs/starlight@0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1))):
+    dependencies:
+      '@astrojs/starlight': 0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1))
+      mdast-util-mdx-jsx: 3.2.0
+      rehype-raw: 7.0.0
+      unist-util-visit: 5.0.0
+      unist-util-visit-parents: 6.0.1
+    transitivePeerDependencies:
+      - supports-color
 
   starlight-theme-rapide@0.5.1(@astrojs/starlight@0.35.2(astro@5.13.7(@types/node@24.3.1)(rollup@4.50.1)(typescript@5.9.2)(yaml@2.8.1))):
     dependencies:
