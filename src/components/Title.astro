@@ -3,8 +3,14 @@ import Default from "@astrojs/starlight/components/SiteTitle.astro";
 import { Badge } from "@astrojs/starlight/components";
 ---
 
-<Default><slot /></Default>
+<Default>
+  <slot />
+</Default>
 
-<div style="margin-left: 0.5rem;">
-  <Badge text="v7.x" variant="tip" size="small" />
-</div>
+<Badge text="v7.x" variant="tip" size="small" class="version-badge" />
+
+<style>
+.version-badge {
+  margin: auto 0 auto 0.5rem;
+}
+</style>
