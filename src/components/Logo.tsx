@@ -4,7 +4,7 @@ import { useMediaQuery } from "@mantine/hooks";
 
 export default function Logo({ ...props }: ComponentProps<"svg">)
 {
-    const [ref, hover] = useAnimate();
+    const [ref, animate] = useAnimate();
     const largeDisplay = useMediaQuery("(min-width: 85rem)");
 
     useEffect(() =>
@@ -14,15 +14,14 @@ export default function Logo({ ...props }: ComponentProps<"svg">)
             return;
         }
 
-        hover(ref.current, {
-            y: [-10, 0, 10, 0, -10],
+        animate(ref.current, {
+            y: [-10, 10],
+            rotate: [1, -3],
         }, {
-            bounce: 0.75,
-            bounceDamping: 5,
-            duration: 5,
-            ease: "linear",
+            type: "tween",
+            duration: 1.5,
             repeat: Infinity,
-            repeatType: "loop",
+            repeatType: "reverse",
         });
     }, [ref]);
 
