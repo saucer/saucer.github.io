@@ -1,0 +1,86 @@
+---
+title: Embedding
+sidebar:
+  order: 4
+---
+
+import { Code, FileTree } from "@astrojs/starlight/components";
+
+import Embedding from "./embedding.cpp?raw";
+import PackageJson from "./package.json?raw";
+
+> This page documents the embedding process
+
+---
+
+Instead of always shipping the frontend files alongside your binary it is also possible to embed all the web-content into your saucer application.
+The easiest way to accomplish this is by using the [saucer-cli](https://github.com/saucer/cli).
+
+## Pre-Requisites
+
+- A static version of the web-page to embed
+
+## Automated Embedding
+
+We recommend to use the _saucer-cli_ within your `package.json` build script.  
+To get started install the `@saucer-dev/cli` package _(i.e. `pnpm install @saucer-dev/cli`)_.
+
+Now, assuming your current project structure is similar to this:
+
+<FileTree>
+
+- out _(created by e.g. `pnpm run build`)_
+  - logos
+    - ...
+  - \_next
+    - ...
+  - 404.html
+  - icon.webp
+  - index.html
+- ...
+- package.json
+
+</FileTree>
+
+Then conduct the following changes in your `package.json`:
+
+<Code
+  lang="json"
+  code={PackageJson}
+  title="Example: Embedding"
+  ins={[
+    {
+      range: "5-6",
+      label: "1. This is assuming that the web-page is built into 'out'",
+    },
+  ]}
+  collapse={["2-3", "8-10"]}
+  showLineNumbers
+/>
+
+## Using the Embedding Files
+
+After building your project, a folder named `"embedded"` _- unless otherwise specified -_ should now be generated.
+
+Now simply consume this folder as a include directory.
+
+```cmake title="Example: Consuming Embedded Folder"
+target_include_directories(${PROJECT_NAME} PRIVATE "path/to/generated/folder")
+```
+
+Now it's only a matter of including the header in your code and calling `embed` on the webview.  
+To serve the files simply call `serve` and specify the file-path.
+
+<Code
+  lang="cpp"
+  code={Embedding}
+  title="Example: Embedding"
+  ins={[{ range: "1" }, { range: "8-9" }]}
+  del={[{ range: "7" }]}
+  collapse={["6-6", "10-10"]}
+  showLineNumbers
+/>
+
+:::note
+Calling `webview::embed` multiple times will merge the given files with the already embedded ones.
+:::
