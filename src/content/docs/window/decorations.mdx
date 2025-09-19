@@ -66,4 +66,12 @@ When the webview `attributes` (`saucer::webview::options{.attributes = true}`) s
 - `data-webview-ignore`
   > Add this to elements that trigger any kind of unwanted operation. This can happen when the parent of such an element has a `data-webview` attribute
 
+Along with the attributes, the following window functions are also exposed:
+
+- `saucer.close()`
+- `saucer.startDrag()`
+- `saucer.startResize(saucer.windowEdge)`
+- `saucer.minimize(bool)` / `saucer.minimized()`
+- `saucer.maximize(bool)` / `saucer.maximized()`
+
 [^3]: e.g. `data-webview-resize="tr"` to start resizing from the top right border.
