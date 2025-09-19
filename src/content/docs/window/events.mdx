@@ -1,0 +1,133 @@
+---
+title: Events
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+> This page documents various window events
+
+---
+
+Saucer offers a simple event system. Classes that offer events have the following member functions:
+
+- `on<event>(listener)`
+- `once<event>(callback)`
+- `off(event)`
+- `off(event, id)`
+
+Registering an event is as simple as calling `on`:
+
+```cpp title="Example: Event Registration"
+const auto id = window->on<saucer::window::event::resize>([](int width, int height) {
+    // ...
+});
+```
+
+:::tip
+In case you only care about an event one time, you can use `once` instead of `on`.
+:::
+
+Each registered event is associated with an ID. This ID can later be used to disconnect the event:
+
+```cpp title="Example: Unregister Event"
+window->off(saucer::window::event::resize, id);
+```
+
+It is also possible to disconnect all events of a specific type by omitting the ID:
+
+```cpp title="Example: Unregister Events"
+window->off(saucer::window::event::resize);
+```
+
+There is also the possibility to register events that will not be cleared by wildcard disconnects:
+
+```cpp title="Example: Non-Clearable Event"
+window->on<saucer::window::event::resize>({{.func = [](int width, int height) { /*...*/ }, .clearable = false}});
+```
+
+These events can only be cleared by explicitly disconnecting them by their ID.
+
+## Available Events
+
+<Tabs>
+  <TabItem value="decorated" label="Decorated">
+   This event is emitted when a windows decorations change.
+
+    ```cpp
+    window->on<saucer::window::event::decorated>([](saucer::window::decoration) {
+        // ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="maximize" label="Maximize">
+   This event is emitted when a window is (un-)maximized.
+
+    ```cpp
+    window->on<saucer::window::event::maximize>([](bool) {
+        // ...
+    });
+    ```
+
+    The passed parameter is set to `true` when the window was maximized and `false` otherwise.
+
+  </TabItem>
+  <TabItem value="minimize" label="Minimize">
+   This event is emitted when a window is (un-)minimized.
+
+    ```cpp
+    window->on<saucer::window::event::minimize>([](bool) {
+        // ...
+    });
+    ```
+
+    The passed parameter is set to `true` when the window was minimized and `false` otherwise.
+
+  </TabItem>
+  <TabItem value="closed" label="Closed">
+   This event is emitted when a window is closed.
+
+    ```cpp
+    window->on<saucer::window::event::closed>([] {
+        // ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="resize" label="Resize">
+   This event is emitted when a window is resized.
+
+    ```cpp
+    window->on<saucer::window::event::resize>([](int, int) {
+        // ...
+    });
+    ```
+
+    The passed parameters are the new `width` and `height`.
+
+  </TabItem>
+  <TabItem value="focus" label="Focus">
+   This event is emitted when a window is (un-)focused.
+
+    ```cpp
+    window->on<saucer::window::event::focus>([](bool) {
+        // ...
+    });
+    ```
+
+    The passed parameter is set to `true` when the window was focused and `false` otherwise.
+
+  </TabItem>
+  <TabItem value="close" label="Close">
+   This event is emitted when a window is about to be closed.
+
+    ```cpp
+    window->on<saucer::window::event::close>([] -> saucer::policy {
+        // ...
+    });
+    ```
+
+    Subscribers of this event can block (`saucer::policy::block`) or allow (`saucer::policy::allow`) the close operation by returning the respective policy decision.
+
+  </TabItem>
+</Tabs>
