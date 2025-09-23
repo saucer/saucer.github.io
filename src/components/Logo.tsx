@@ -2,6 +2,10 @@ import { useAnimate } from "motion/react";
 import { type ComponentProps, useEffect } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 
+import imageTorus from "../assets/torus.png";
+import imageHand from "../assets/hand.png";
+import imageText from "../assets/text.png";
+
 export default function Logo({ ...props }: ComponentProps<"svg">)
 {
     const [ref, animate] = useAnimate();
@@ -41,7 +45,7 @@ export default function Logo({ ...props }: ComponentProps<"svg">)
                 width="106.08"
                 height="92.159996"
                 preserveAspectRatio="none"
-                xlinkHref="/src/assets/torus.png"
+                xlinkHref={imageTorus.src}
             >
             </image>
             <image
@@ -50,7 +54,7 @@ export default function Logo({ ...props }: ComponentProps<"svg">)
                 width="168.95999"
                 height="113.27999"
                 preserveAspectRatio="none"
-                xlinkHref="/src/assets/hand.png"
+                xlinkHref={imageHand.src}
             >
             </image>
             <image
@@ -59,7 +63,7 @@ export default function Logo({ ...props }: ComponentProps<"svg">)
                 width="214.32001"
                 height="57.84"
                 preserveAspectRatio="none"
-                xlinkHref="/src/assets/text.png"
+                xlinkHref={imageText.src}
             >
             </image>
         </svg>

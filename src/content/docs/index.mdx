@@ -18,6 +18,8 @@ hero:
 
 import { Card, CardGrid, Code } from "@astrojs/starlight/components";
 
+import imagePreview from "../../assets/preview.png";
+
 <CardGrid>
   <Card title="Frontend Independent" icon="rocket">
     Bring your favorite frontend framework, integration into saucer is dead
@@ -54,8 +56,10 @@ import { Card, CardGrid, Code } from "@astrojs/starlight/components";
 ---
 
 <Card title="Preview" icon="seti:image">
-    <img src="/src/assets/preview.png" />
-    <div align="center">
-        We also have various [examples](https://github.com/saucer/saucer/tree/master/examples) available on GitHub or CodeBerg!
-    </div>
+  <img src={imagePreview.src} />
+  <div align="center">
+    We also have various
+    [examples](https://github.com/saucer/saucer/tree/master/examples) available
+    on GitHub or CodeBerg!
+  </div>
 </Card>
