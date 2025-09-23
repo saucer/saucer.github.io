@@ -13,8 +13,9 @@ import CMakeLists from "./CMakeLists.txt?raw";
 
 ---
 
-Instead of always shipping the frontend files alongside your binary it is also possible to embed all the web-content into your saucer application.  
-Saucer offers a built-in utility to achieve this, but you are free to use different mechanisms as well.
+Instead of always shipping the frontend files alongside your binary it is also possible to embed all the web-content into your saucer application.
+
+Saucer offers a built-in utility to achieve this via CMake, but users are free to either generate the embedding files themselves or roll their own embedding mechanism by using [custom schemes](/webview/schemes).
 
 ## Pre-Requisites
 
