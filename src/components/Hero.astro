@@ -19,7 +19,7 @@ const isHomepage = route.id === "";
     <div class="hero">
       <Logo className="logo" client:load />
       <p class="tagline">
-        The{" "}
+        The&nbsp;
         <RotatingText
           className="text"
           staggerFrom={"last"}
@@ -35,7 +35,7 @@ const isHomepage = route.id === "";
           ]}
           client:load
         />
-        {" "}C++ webview library
+        &nbsp;C++ webview library
       </p>
       {
         actions && actions.length > 0 && (
@@ -93,7 +93,6 @@ const isHomepage = route.id === "";
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  white-space: preserve-spaces;
   font-weight: 500;
   font-size: 1.5rem;
   padding-bottom: 1rem;
