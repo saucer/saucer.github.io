@@ -7,14 +7,14 @@ sidebar:
 import { Code, FileTree } from "@astrojs/starlight/components";
 
 import Embedding from "./embedding.cpp?raw";
-import PackageJson from "./package.json?raw";
+import CMakeLists from "./CMakeLists.txt?raw";
 
 > This page documents the embedding process
 
 ---
 
-Instead of always shipping the frontend files alongside your binary it is also possible to embed all the web-content into your saucer application.
-The easiest way to accomplish this is by using the [saucer-cli](https://github.com/saucer/cli).
+Instead of always shipping the frontend files alongside your binary it is also possible to embed all the web-content into your saucer application.  
+Saucer offers a built-in utility to achieve this, but you are free to use different mechanisms as well.
 
 ## Pre-Requisites
 
@@ -22,10 +22,8 @@ The easiest way to accomplish this is by using the [saucer-cli](https://github.c
 
 ## Automated Embedding
 
-We recommend to use the _saucer-cli_ within your `package.json` build script.  
-To get started install the `@saucer-dev/cli` package _(i.e. `pnpm install @saucer-dev/cli`)_.
-
-Now, assuming your current project structure is similar to this:
+The recommended way to embed web-content is to use the `saucer_embed` CMake Function.
+Let's assume you have a project structure similar to this:
 
 <FileTree>
 
@@ -39,43 +37,43 @@ Now, assuming your current project structure is similar to this:
   - index.html
 - ...
 - package.json
+- CMakeLists.txt
 
 </FileTree>
 
-Then conduct the following changes in your `package.json`:
+Then conduct the following changes to your `CMakeLists.txt`:
 
 <Code
-  lang="json"
-  code={PackageJson}
+  lang="cmake"
+  code={CMakeLists}
   title="Example: Embedding"
   ins={[
     {
-      range: "5-6",
-      label: "1. This is assuming that the web-page is built into 'out'",
+      range: "15-16",
     },
   ]}
-  collapse={["2-3", "8-10"]}
+  collapse={["1-12"]}
   showLineNumbers
 />
 
+:::tip
+It is also possible to generate the embedding files without using `saucer_embed`.  
+Some Alternatives:
+
+- Call the embed script from the command-line: `cmake -P <path-to-saucer>/cmake/embed.cmake <directory>`
+- Generate the embedding files yourself. For further information see [`saucer::embedded_file`](https://github.com/saucer/saucer/blob/f4a5fe503bd59a400c0fe96f8c304a450422419d/include/saucer/webview.hpp#L49-L53) and [`webview::embed`](https://github.com/saucer/saucer/blob/f4a5fe503bd59a400c0fe96f8c304a450422419d/include/saucer/webview.hpp#L176)
+
+:::
+
 ## Using the Embedding Files
 
-After building your project, a folder named `"embedded"` _- unless otherwise specified -_ should now be generated.
-
-Now simply consume this folder as a include directory.
-
-```cmake title="Example: Consuming Embedded Folder"
-target_include_directories(${PROJECT_NAME} PRIVATE "path/to/generated/folder")
-```
-
-Now it's only a matter of including the header in your code and calling `embed` on the webview.  
-To serve the files simply call `serve` and specify the file-path.
+After linking against the generated `saucer::embedded` target you are all set to use the embedded files.
 
 <Code
   lang="cpp"
   code={Embedding}
   title="Example: Embedding"
-  ins={[{ range: "1" }, { range: "8-9" }]}
+  ins={[{ range: "2" }, { range: "8-9" }]}
   del={[{ range: "7" }]}
   collapse={["6-6", "10-10"]}
   showLineNumbers

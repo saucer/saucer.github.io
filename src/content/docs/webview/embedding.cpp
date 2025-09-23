@@ -1,6 +1,5 @@
-
-#include <all.hpp>
 #include <saucer/smartview.hpp>
+#include <saucer/embedded/all.hpp>
 
 coco::stray start(saucer::application *)
 {
