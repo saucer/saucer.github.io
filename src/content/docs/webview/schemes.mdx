@@ -1,0 +1,63 @@
+---
+title: Schemes
+sidebar:
+  order: 5
+---
+
+> This page documents how custom schemes work
+
+---
+
+Saucer has built-in support for custom url schemes. In fact, [embedding](/webview/embedding) is built on top of this feature.  
+
+## Registration
+
+Before getting started, you will have to register the scheme. This has to be done **before** any webview is created.
+
+```cpp title="Example: Scheme Registration" ins={3}
+int main()
+{
+    saucer::webview::register_scheme("name");
+    return saucer::application::create({.id = "hello-world"})->run(start);
+}
+```
+
+## Handler
+
+After registering the scheme, you can register a handler on a specific `webview` instance that is invoked each time a request is sent to the custom-scheme.  
+
+The handler works similar to that of [exposed functions](/webview/interop) (in regards to coroutine support, executors, ...) with the only difference being that it has to return a `saucer::scheme::response`.
+
+```cpp title="Example: Scheme Handler"
+webview->handle("name", [](const saucer::scheme::request& req)
+{
+    return saucer::scheme::response{
+        .data   = saucer::stash<>::from_str(std::format("Hello: {}", req.url().string())),
+        .mime   = "text/plain",
+        .status = 200,
+    };
+});
+```
+
+Requesting a resource from the custom-scheme via e.g. `await fetch("name://root/content")` would now return the response defined above.
+
+:::caution
+Due to upstream issues related to the JS-Fetch API on WebView2, it is required to specify an [authority](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Authority) for all scheme urls.  
+If none is specified, the given file will be treated as the authority, which may lead to unexpected results.
+
+```cpp title="Example: Add Authority" del={1} ins={2}
+smartview.set_url("demo://index.html");
+smartview.set_url("demo://root/index.html"); // "root" could be anything
+```
+
+It is recommended to always request resources with a given authority in the URL due to this issue! 
+:::
+
+
+The passed request contains information on the requested `url`, as well as:
+
+* The reqeust `method`
+* The request `content` (i.e. the request body)
+* The request `headers`
+
+The response should at least contain the response `data`, `mime`-type and the `status`-code. You can also specify the response-`headers`.  
