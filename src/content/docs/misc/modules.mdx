@@ -4,6 +4,8 @@ sidebar:
   order: 1
 ---
 
+import { LinkCard } from "@astrojs/starlight/components";
+
 > This page documents existing modules
 
 ---
@@ -38,3 +40,17 @@ target_link_libraries(${PROJECT_NAME} [PRIVATE|PUBLIC] saucer::desktop)
 ```
 
 Please refer to the respective documentation of the module for more information on configuration or available versions.
+
+## User Modules
+
+Feel free to also write your own modules!
+To get started I recommend checking out the official modules first, to see how they are structured.
+Modules are fairly simple and mainly use the existing [event mechanisms](/window/events) as well as [natives](/misc/native) to implement new functionality.
+
+---
+
+<LinkCard
+  title="Extend the List!"
+  description="Wrote your own module? Please let me know, I will extend the list!"
+  href="https://github.com/saucer/saucer/discussions/new?category=showcase"
+/>
