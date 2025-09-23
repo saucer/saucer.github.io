@@ -8,6 +8,9 @@ import starlightAutoSidebar from "starlight-auto-sidebar";
 import starlightThemeRapide from "starlight-theme-rapide";
 
 export default defineConfig({
+    site: "https://saucer.github.io",
+    base: "/",
+    trailingSlash: "never",
     integrations: [
         starlight({
             title: "Saucer",
