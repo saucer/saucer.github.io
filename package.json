@@ -31,5 +31,6 @@
     "dprint": "^0.50.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.2"
-  }
+  },
+  "packageManager": "pnpm@10.0.0"
 }
