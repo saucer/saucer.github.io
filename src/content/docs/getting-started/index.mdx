@@ -106,3 +106,8 @@ The [GitHub Workflows](https://github.com/saucer/saucer/actions/workflows/build.
 
 For those who plan on using saucer for serving their own frontend, we recommend to install the `@saucer-dev/types` package,
 which provides typed abstractions over all saucer functions.
+
+:::caution
+When using the typescript package, you should not access saucer functions through `saucer.something` and instead import them from the package.  
+E.g. instead of using `saucer.call`, import `call` from `import { call } from "@saucer-dev/types";`
+:::

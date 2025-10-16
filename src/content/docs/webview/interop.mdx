@@ -28,6 +28,16 @@ In the example shown above, the function would be callable from JavaScript as fo
 const result = await saucer.exposed.multiply(5, 10);
 ```
 
+:::caution
+When using the typescript package, define the `multiply` function like this instead:
+
+```ts
+import { exposed } from "@saucer-dev/types";
+const multiply = exposed<number, [number, number]>("multiply");
+```
+
+:::
+
 Function Parameters are automatically type-checked:
 
 ```js title="Example: Automatic Type-Checking" frame="terminal" showLineNumbers=false del="[Error]"
