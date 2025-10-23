@@ -61,8 +61,10 @@ Then conduct the following changes to your `CMakeLists.txt`:
 It is also possible to generate the embedding files without using `saucer_embed`.  
 Some Alternatives:
 
-- Call the embed script from the command-line: `cmake -P <path-to-saucer>/cmake/embed.cmake <directory>`
-- Generate the embedding files yourself. For further information see [`saucer::embedded_file`](https://github.com/saucer/saucer/blob/f4a5fe503bd59a400c0fe96f8c304a450422419d/include/saucer/webview.hpp#L49-L53) and [`webview::embed`](https://github.com/saucer/saucer/blob/f4a5fe503bd59a400c0fe96f8c304a450422419d/include/saucer/webview.hpp#L176)
+1. Lookup the path of [saucer-embed](https://github.com/saucer/embed) or clone it, then invoke the script from the command-line:  
+   `cmake -P <path-to-saucer-embed>/cmake/embed.cmake <directory>`
+
+2. Generate the embedding files yourself. For further information see [`saucer::embedded_file`](https://github.com/saucer/saucer/blob/f4a5fe503bd59a400c0fe96f8c304a450422419d/include/saucer/webview.hpp#L49-L53) and [`webview::embed`](https://github.com/saucer/saucer/blob/f4a5fe503bd59a400c0fe96f8c304a450422419d/include/saucer/webview.hpp#L176)
 
 :::
 
