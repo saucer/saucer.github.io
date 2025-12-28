@@ -12,5 +12,5 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(saucer)
 
-saucer_embed("out")
+saucer_embed("out" TARGET ${PROJECT_NAME})
 target_link_libraries(${PROJECT_NAME} PRIVATE saucer::saucer saucer::embedded)

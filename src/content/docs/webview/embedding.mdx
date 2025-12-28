@@ -58,6 +58,11 @@ Then conduct the following changes to your `CMakeLists.txt`:
 />
 
 :::tip
+When specifying a `TARGET` in the call to `saucer_embed`, a pre-build hook will be added to the target to refresh the embedded files when building.
+Please beware however, that this will only refresh files that were embedded already, extending the list of embedded files requires to rerun the CMake Generate step!
+:::
+
+:::tip
 It is also possible to generate the embedding files without using `saucer_embed`.  
 Some Alternatives:
 
