@@ -49,11 +49,6 @@ Function Parameters are automatically type-checked:
 It is also possible to call exposed functions via `saucer.call("multiply", [5, 10])`.  
 :::
 
-:::tip
-Exceptions thrown in exposed functions are automatically forwarded to JavaScript if you're compiling with exceptions.
-This behavior can also be explicitly disabled by setting `saucer_exceptions` to `OFF` (see [CMake Configuration](../getting-started/cmake.mdx))
-:::
-
 ## Executing JavaScript
 
 It is also possible to call JavaScript code and capture the result:
@@ -82,7 +77,7 @@ The utility `saucer::make_args` can be used to forward multiple function argumen
 :::
 
 You may have noticed, that `evaluate` as well as `execute` take `format_string`s.
-Therefore it can be difficult to pass in code that is not known at compile-time _(as strings are serialized to JavaScript and will thus contain quotes)_.
+Therefore it can be difficult to pass in code that is not known at compile-time _(as strings will be serialized for JavaScript and will thus contain quotes)_.
 
 To avoid the automatic quoting of strings, you can use `saucer::unquoted`:
 
@@ -95,7 +90,22 @@ webview->execute("{}({})", saucer::unquoted{"console.log"}, "42");
 All exposed functions return Promises in JavaScript. As seen above, in most use-cases a simple result is returned.
 However, it is also possible to reject the JavaScript Promise if desired.
 
-There are two ways to do this, by returning a `std::expected` or by taking a `saucer::executor`.
+There are three ways to do this, by throwing an exception, returning an `std::expected` or by taking a `saucer::executor` as the last parameter.
+
+### Throwing an Exception
+
+```cpp title="Example: Throwing an exception"
+webview->expose("divide", [](double a, double b) {
+    if (b == 0) {
+        throw std::runtime_error{"Divisor must not be zero"};
+    }
+    return a / b;
+});
+```
+
+:::note
+This will (obviously) not work when compiling with `-fno-exceptions` and one can also disable this behavior explicitly (see [CMake Configuration](../getting-started/cmake))
+:::
 
 ### Returning `std::expected`
 
