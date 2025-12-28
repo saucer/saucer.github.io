@@ -29,7 +29,7 @@ After registering the scheme, you can register a handler on a specific `webview`
 The handler works similar to that of [exposed functions](/webview/interop) (in regards to coroutine support, executors, ...) with the only difference being that it has to return a `saucer::scheme::response`.
 
 ```cpp title="Example: Scheme Handler"
-webview->handle("name", [](const saucer::scheme::request& req)
+webview->handle_scheme("name", [](const saucer::scheme::request& req)
 {
     return saucer::scheme::response{
         .data   = saucer::stash::from_str(std::format("Hello: {}", req.url().string())),
