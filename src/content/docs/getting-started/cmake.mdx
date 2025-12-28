@@ -10,14 +10,14 @@ Define the backend to use. By default, the most appropriate for your platform wi
 The following options are available:
 
 - _Default_
-- Qt5
-- Qt6
+- None
+- Qt
 - WebKit
 - WebKitGtk
 - WebView2
 
-```cmake title="Example: Use Qt6 backend"
-set(saucer_backend "Qt6")
+```cmake title="Example: Use Qt backend"
+set(saucer_backend "Qt")
 ```
 
 ## Serializer
@@ -73,4 +73,12 @@ It is thus recommended to enable this option when developing language bindings f
 
 ```cmake title="Example: Enable MSVC Hack"
 set(saucer_msvc_hack ON)
+```
+
+## Exceptions
+
+Saucer will catch exceptions thrown in exposed functions **if compiled without `-fno-exceptions`**. This behavior can also be explicitly disabled via CMake.
+
+```cmake title="Example: Disable Exception Handling"
+set(saucer_exceptions OFF)
 ```
