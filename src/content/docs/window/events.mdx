@@ -131,3 +131,14 @@ These events can only be cleared by explicitly disconnecting them by their ID.
 
   </TabItem>
 </Tabs>
+
+## Awaiting Events
+
+It is also possible to await events. This might be useful for modals or similar.
+
+```cpp title="Example: Awaiting Event"
+co_await window->await<saucer::window::event::close>(saucer::policy::allow);
+// Window was closed. Do something useful...
+```
+
+The parameters and return-value are inversed here. This means that the value that is usually returned from within the event callback is passed as a parameter, and the parameters that are usually passed to the event-callback are returned from the awaitable.
