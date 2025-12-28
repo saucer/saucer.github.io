@@ -32,7 +32,7 @@ The handler works similar to that of [exposed functions](/webview/interop) (in r
 webview->handle("name", [](const saucer::scheme::request& req)
 {
     return saucer::scheme::response{
-        .data   = saucer::stash<>::from_str(std::format("Hello: {}", req.url().string())),
+        .data   = saucer::stash::from_str(std::format("Hello: {}", req.url().string())),
         .mime   = "text/plain",
         .status = 200,
     };
