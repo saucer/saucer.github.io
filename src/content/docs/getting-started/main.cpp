@@ -20,7 +20,7 @@ coco::stray start(saucer::application *app)
     webview->expose("call_me_too", [&]() -> coco::task<double>
     {
 
-        auto random = co_await webview->evaluate<double>("Math.random()");
+        auto random = *co_await webview->evaluate<double>("Math.random()");
         std::println("Random: {}", random);
         co_return random;
     });

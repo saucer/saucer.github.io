@@ -49,13 +49,26 @@ Function Parameters are automatically type-checked:
 It is also possible to call exposed functions via `saucer.call("multiply", [5, 10])`.  
 :::
 
+:::tip
+Exceptions thrown in exposed functions are automatically forwarded to JavaScript if you're compiling with exceptions.
+This behavior can also be explicitly disabled by setting `saucer_exceptions` to `OFF` (see [CMake Configuration](../getting-started/cmake.mdx))
+:::
+
 ## Executing JavaScript
 
 It is also possible to call JavaScript code and capture the result:
 
 ```cpp title="Example: Evaluating JavaScript"
-auto random = co_await webview->evaluate<double>("Math.random()");
-auto pow = co_await webview->evaluate<double>("Math.pow({}, {})", 2, 5);
+auto random = *co_await webview->evaluate<double>("Math.random()");
+auto pow = *co_await webview->evaluate<double>("Math.pow({}, {})", 2, 5);
+```
+
+All calls to `evaluate` return an `std::expected` because JavaScript exceptions are caught:
+
+```cpp title="Example: Catching JavaScript Exceptions" frame="terminal" showLineNumbers=false del="[Error]"
+> auto res = co_await webview->evaluate<std::vector<int>>("new Array(-1)");
+> std::println("Error: {}", res.error());
+[Error] Error: RangeError
 ```
 
 In case the result is not of importance to you, it is advised to use `execute` instead.
