@@ -19,7 +19,7 @@ const response = await fetch(
 );
 
 const parsed = await response.json();
-const version = parsed?.[0]?.["name"] ?? "v7.0.0";
+const version = parsed?.[0]?.["name"] ?? "v8.0.0";
 
 const { code, lang, ...props } = Astro.props;
 const versionedCode = code.replace("$VERSION$", version);
