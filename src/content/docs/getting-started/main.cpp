@@ -4,7 +4,7 @@
 coco::stray start(saucer::application *app)
 {
     auto window  = saucer::window::create(app).value();
-    auto webview = saucer::smartview<>::create({.window = window});
+    auto webview = saucer::smartview::create({.window = window});
 
 
     window->set_title("Hello World!");
