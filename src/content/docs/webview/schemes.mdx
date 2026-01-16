@@ -8,7 +8,7 @@ sidebar:
 
 ---
 
-Saucer has built-in support for custom url schemes. In fact, [embedding](/webview/embedding) is built on top of this feature.  
+Saucer has built-in support for custom url schemes. In fact, [embedding](/webview/embedding) is built on top of this feature.
 
 ## Registration
 
@@ -24,7 +24,7 @@ int main()
 
 ## Handler
 
-After registering the scheme, you can register a handler on a specific `webview` instance that is invoked each time a request is sent to the custom-scheme.  
+After registering the scheme, you can register a handler on a specific `webview` instance that is invoked each time a request is sent to the custom-scheme.
 
 The handler works similar to that of [exposed functions](/webview/interop) (in regards to coroutine support, executors, ...) with the only difference being that it has to return a `saucer::scheme::response`.
 
@@ -50,14 +50,13 @@ smartview.set_url("demo://index.html");
 smartview.set_url("demo://root/index.html"); // "root" could be anything
 ```
 
-It is recommended to always request resources with a given authority in the URL due to this issue! 
+It is recommended to always request resources with a given authority in the URL due to this issue!
 :::
-
 
 The passed request contains information on the requested `url`, as well as:
 
-* The reqeust `method`
-* The request `content` (i.e. the request body)
-* The request `headers`
+- The reqeust `method`
+- The request `content` (i.e. the request body)
+- The request `headers`
 
-The response should at least contain the response `data`, `mime`-type and the `status`-code. You can also specify the response-`headers`.  
+The response should at least contain the response `data`, `mime`-type and the `status`-code. You can also specify the response-`headers`.

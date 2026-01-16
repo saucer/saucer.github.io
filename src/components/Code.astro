@@ -23,7 +23,11 @@ const parsed = await response.json();
 const version = parsed?.[0]?.["name"] ?? "v8.0.0";
 
 const { code, lang, noVersion, ...props } = Astro.props;
-const versionedCode = code.replace("$VERSION$", noVersion ? version.substring(1) : version);
+
+const versionedCode = code.replace(
+    "$VERSION$",
+    noVersion ? version.substring(1) : version,
+);
 ---
 
 <Default code={versionedCode} lang={lang} {...props}>
