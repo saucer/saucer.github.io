@@ -16,7 +16,7 @@ export default defineConfig({
             title: "Saucer",
             description: "A modern, cross-platform C++ webview library",
             social: [
-                { icon: "discord", label: "Discord", href: "https://discord.gg/ndhmQE4225" },
+                { icon: "discord", label: "Discord", href: "https://discord.gg/VCF4hNVkn5" },
                 { icon: "matrix", label: "Matrix", href: "https://matrix.to/#/#saucer:matrix.org" },
                 { icon: "codeberg", label: "CodeBerg", href: "https://codeberg.org/saucer/saucer" },
                 { icon: "github", label: "GitHub", href: "https://github.com/saucer/saucer" },
